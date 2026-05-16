@@ -1,8 +1,9 @@
-# 🎵 Terminal Music Player
+#  Terminal Music Player .✦ ݁˖
 
-A lightweight, feature-rich music player for your terminal built with C++.
+A cute and nice music player for your terminal built with C++.
 
-## Features
+## Features and thinks it can do
+╰────── -----· · ୨୧ · ·----- ──────╯
 
 - 🎵 **Play multiple audio formats** - MP3, WAV, FLAC, OGG
 - 🎮 **Interactive Terminal UI** - Beautiful ncurses-based interface
@@ -12,7 +13,7 @@ A lightweight, feature-rich music player for your terminal built with C++.
 - 🎨 **Shuffle & Loop** - Customize playback modes
 - ⌨️ **Keyboard Controls** - Intuitive key bindings
 
-## Requirements
+## Requirements if you want to replicate
 
 - **C++17** or higher
 - **CMake 3.10+**
@@ -52,7 +53,7 @@ cmake ..
 make
 ```
 
-## Usage
+## Forma de usarlo
 
 ```bash
 # Run with default music directory (./music)
@@ -76,7 +77,7 @@ make
 | `Enter` | Play Selected Track |
 | `Q` | Quit |
 
-## Project Structure
+## Estructura // tambien esta el UML por ahí
 
 ```
 music-player-tomato--3/
