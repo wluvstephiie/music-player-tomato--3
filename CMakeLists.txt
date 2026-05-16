@@ -5,12 +5,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required packages
-find_package(ncurses REQUIRED)
-find_package(Threads REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(NCURSES REQUIRED ncurses)
 
-# Include directories
+# Add include directories
 include_directories(${NCURSES_INCLUDE_DIRS})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # Source files
 set(SOURCES
@@ -20,24 +20,8 @@ set(SOURCES
     src/ui.cpp
 )
 
-set(HEADERS
-    src/player.h
-    src/playlist.h
-    src/ui.h
-    src/audio.h
-)
-
 # Create executable
-add_executable(music-player ${SOURCES} ${HEADERS})
+add_executable(music-player ${SOURCES})
 
 # Link libraries
-target_link_libraries(music-player
-    ${NCURSES_LIBRARIES}
-    Threads::Threads
-)
-
-# Platform-specific settings
-if(APPLE)
-    target_link_libraries(music-player "-framework CoreAudio")
-    target_link_libraries(music-player "-framework AudioToolbox")
-endif()
+target_link_libraries(music-player ${NCURSES_LIBRARIES})

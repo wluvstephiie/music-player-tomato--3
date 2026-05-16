@@ -1,45 +1,53 @@
-# Music Player Tomato 🍅🎵
+# 🎵 Terminal Music Player
 
-A lightweight, feature-rich terminal music player built with C++.
+A lightweight, feature-rich music player for your terminal built with C++.
 
 ## Features
 
-- 🎵 Play MP3, WAV, and FLAC audio files
-- 🎮 Interactive terminal UI with keyboard controls
-- 📋 Playlist management with shuffle and loop modes
-- 🔊 Volume control
-- ⏱️ Progress bar and time tracking
-- 🎨 Beautiful ncurses-based interface
-- 📂 Load entire directories of music files
+- 🎵 **Play multiple audio formats** - MP3, WAV, FLAC, OGG
+- 🎮 **Interactive Terminal UI** - Beautiful ncurses-based interface
+- 📋 **Playlist Management** - Load entire music directories
+- 🔊 **Volume Control** - Adjust volume on the fly
+- ⏱️ **Progress Tracking** - Visual progress bar and time display
+- 🎨 **Shuffle & Loop** - Customize playback modes
+- ⌨️ **Keyboard Controls** - Intuitive key bindings
 
 ## Requirements
 
-- C++17 or higher
-- CMake 3.10+
-- ncurses library
-- libmpg123 (for MP3 support)
-- libsndfile (for WAV/FLAC support)
-- PortAudio (for audio output)
+- **C++17** or higher
+- **CMake 3.10+**
+- **ncurses** library
+- **GCC** or **Clang** compiler
 
-## Installation
+### Install Dependencies
 
-### Ubuntu/Debian
+**Ubuntu/Debian:**
 ```bash
-sudo apt-get install libncurses-dev libmpg123-dev libsndfile1-dev portaudio19-dev cmake
+sudo apt-get install libncurses-dev build-essential cmake
 ```
 
-### macOS
+**macOS:**
 ```bash
-brew install ncurses mpg123 libsndfile portaudio cmake
+brew install ncurses cmake
+```
+
+**Fedora/RHEL:**
+```bash
+sudo dnf install ncurses-devel cmake gcc-c++
 ```
 
 ## Building
 
 ```bash
+# Clone the repository
 git clone https://github.com/wluvstephiie/music-player-tomato--3.git
 cd music-player-tomato--3
+
+# Create build directory
 mkdir build
 cd build
+
+# Build with CMake
 cmake ..
 make
 ```
@@ -47,25 +55,25 @@ make
 ## Usage
 
 ```bash
-./music-player [path/to/music/directory]
-```
+# Run with default music directory (./music)
+./music-player
 
-If no directory is specified, it defaults to `./music`.
+# Run with custom music directory
+./music-player /path/to/your/music
+```
 
 ### Keyboard Controls
 
 | Key | Action |
 |-----|--------|
 | `Space` | Play/Pause |
-| `N` | Next track |
-| `P` | Previous track |
-| `+` | Volume up |
-| `-` | Volume down |
-| `L` | Toggle loop mode |
-| `S` | Toggle shuffle mode |
-| `→` | Seek forward 5 seconds |
-| `←` | Seek backward 5 seconds |
-| `↑` / `↓` | Scroll playlist |
+| `N` | Next Track |
+| `P` | Previous Track |
+| `+` / `-` | Volume Up/Down |
+| `L` | Toggle Loop Mode |
+| `S` | Toggle Shuffle Mode |
+| `↑` / `↓` | Navigate Playlist |
+| `Enter` | Play Selected Track |
 | `Q` | Quit |
 
 ## Project Structure
@@ -73,66 +81,46 @@ If no directory is specified, it defaults to `./music`.
 ```
 music-player-tomato--3/
 ├── src/
-│   ├── main.cpp           # Entry point
-│   ├── player.h           # Audio player class declaration
-│   ├── player.cpp         # Audio player implementation
-│   ├── playlist.h         # Playlist management
-│   ├── playlist.cpp       # Playlist implementation
-│   ├── ui.h               # Terminal UI declaration
-│   ├── ui.cpp             # Terminal UI implementation
-│   └── audio.h            # Audio utility functions
-├── CMakeLists.txt         # Build configuration
-├── .gitignore             # Git ignore file
-└── README.md              # This file
+│   ├── main.cpp           # Application entry point
+│   ├── player.h/cpp       # Audio playback controls
+│   ├── playlist.h/cpp     # Playlist management
+│   ├── ui.h/cpp          # Terminal UI with ncurses
+│   └── audio.h           # Audio utilities (optional)
+├── CMakeLists.txt        # Build configuration
+├── README.md            # This file
+└── .gitignore          # Git ignore file
 ```
 
-## Architecture
+## Features Implemented
 
-### Player (player.h/cpp)
-Handles:
-- Audio file loading and decoding
-- Playback control (play, pause, seek)
-- Volume management
-- Currently playing track info
-
-### Playlist (playlist.h/cpp)
-Manages:
-- Track list from directory
-- Track navigation (next, previous)
-- Shuffle and loop modes
-- Playlist state
-
-### UI (ui.h/cpp)
-Provides:
-- ncurses terminal interface
-- Keyboard input handling
-- Display of current track info
-- Progress bar visualization
-- Playlist display
+✅ Directory scanning for music files
+✅ Playlist navigation
+✅ Play/Pause/Stop controls
+✅ Volume control
+✅ Loop and Shuffle modes
+✅ ncurses-based terminal UI
+✅ Track selection
+✅ Status display
 
 ## Future Enhancements
 
-- [ ] Metadata reading (artist, album, title)
-- [ ] Album art display
-- [ ] Equalizer controls
+- [ ] Real audio decoding (libmpg123, libsndfile)
+- [ ] Metadata reading (artist, title, album art)
 - [ ] Playlist file support (.m3u, .pls)
-- [ ] Search and filter functionality
+- [ ] Equalizer controls
+- [ ] Search/filter functionality
 - [ ] Configuration file support
-- [ ] Themes/color customization
-- [ ] Persistent playback history
+- [ ] Keyboard shortcut customization
+- [ ] Theme support
 
 ## License
 
-MIT License - See LICENSE file for details
+MIT License - feel free to use and modify!
 
 ## Contributing
 
-Contributions are welcome! Feel free to:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+Contributions are welcome! Feel free to submit issues and pull requests.
 
 ## Author
 
-Created by [@wluvstephiie](https://github.com/wluvstephiie)
+Created by [wluvstephiie](https://github.com/wluvstephiie)
