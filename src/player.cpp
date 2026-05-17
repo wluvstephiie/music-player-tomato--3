@@ -1,5 +1,6 @@
 #include "player.h"
 #include <iostream>
+#include <cstdlib>
 
 Player::Player() 
     : state(PlayState::STOPPED), 
@@ -17,60 +18,14 @@ void Player::play(const std::string& filepath) {
     currentFile = filepath;
     state = PlayState::PLAYING;
     currentTime = 0.0;
-    duration = 0.0;  // In a real implementation, you'd load the file duration
-    std::cout << "Playing: " << filepath << std::endl;
-}
-
-void Player::pause() {
-    if (state == PlayState::PLAYING) {
-        state = PlayState::PAUSED;
-    }
-}
-
-void Player::resume() {
-    if (state == PlayState::PAUSED) {
-        state = PlayState::PLAYING;
-    }
-}
-
-void Player::stop() {
-    state = PlayState::STOPPED;
-    currentTime = 0.0;
     duration = 0.0;
-}
 
-void Player::seek(double seconds) {
-    if (seconds >= 0 && seconds <= duration) {
-        currentTime = seconds;
-    }
-}
+    std::cout << "Playing: " << filepath << std::endl;
 
-void Player::setVolume(float vol) {
-    if (vol >= 0.0f && vol <= 1.0f) {
-        volume = vol;
-    }
-}
+    std::string command =
+        "ffplay -nodisp -autoexit \"" +
+        filepath +
+        "\" >/dev/null 2>&1 &";
 
-float Player::getVolume() const {
-    return volume;
-}
-
-Player::PlayState Player::getState() const {
-    return state;
-}
-
-double Player::getCurrentTime() const {
-    return currentTime;
-}
-
-double Player::getDuration() const {
-    return duration;
-}
-
-std::string Player::getCurrentFile() const {
-    return currentFile;
-}
-
-bool Player::isPlaying() const {
-    return state == PlayState::PLAYING;
+    system(command.c_str());
 }
