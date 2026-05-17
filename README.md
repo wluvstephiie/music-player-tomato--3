@@ -1,26 +1,26 @@
 #  Terminal Music Player .✦ ݁˖
 
-A cute and nice music player for your terminal built with C++.
+Un reproductor de musica que funciona en la terminal pero quise hacer en C++ porque pense que estría mas padre.
 
 ## Features and thinks it can do
 ╰────── -----· · ୨୧ · ·----- ──────╯
 
-- 🎵 **Play multiple audio formats** - MP3, WAV, FLAC, OGG
-- 🎮 **Interactive Terminal UI** - Beautiful ncurses-based interface
-- 📋 **Playlist Management** - Load entire music directories
-- 🔊 **Volume Control** - Adjust volume on the fly
-- ⏱️ **Progress Tracking** - Visual progress bar and time display
-- 🎨 **Shuffle & Loop** - Customize playback modes
-- ⌨️ **Keyboard Controls** - Intuitive key bindings
+- 🎵 **Solo tiene una rola** - Pero si lo quieres copiar MP3, WAV, FLAC, OGG
+- 🎮 **Es interaciva con UI** 
+- 📋 **Puedes hacer playlists** - Haz un directorio
+- 🔊 **Volumen** 
+- ⏱️ **Barrita de progreso** 
+- 🎨 **Puedes hacerle shuffle** 
+- ⌨️ **Control con tecldito** 
 
-## Requirements if you want to replicate
+## Cosillas que se ocupan por si me lo copias
 
 - **C++17** or higher
 - **CMake 3.10+**
 - **ncurses** library
 - **GCC** or **Clang** compiler
 
-### Install Dependencies
+### Instala esto
 
 **Ubuntu/Debian:**
 ```bash
@@ -63,7 +63,7 @@ make
 ./music-player /path/to/your/music
 ```
 
-### Keyboard Controls
+### Controles :)
 
 | Key | Action |
 |-----|--------|
@@ -92,7 +92,7 @@ music-player-tomato--3/
 └── .gitignore          # Git ignore file
 ```
 
-## Features Implemented
+## Cosas que le implementé
 
 ✅ Directory scanning for music files
 ✅ Playlist navigation
@@ -103,7 +103,7 @@ music-player-tomato--3/
 ✅ Track selection
 ✅ Status display
 
-## Future Enhancements
+## Cosillas que me dijo copilot que le puedes agregar
 
 - [ ] Real audio decoding (libmpg123, libsndfile)
 - [ ] Metadata reading (artist, title, album art)
@@ -114,14 +114,12 @@ music-player-tomato--3/
 - [ ] Keyboard shortcut customization
 - [ ] Theme support
 
-## License
+## Lic
 
-MIT License - feel free to use and modify!
+Hagan lo que gusten, si le quieres poner algo nuevo es valido!
 
 ## Contributing
+No se que tanto error tenga pero ya corre
 
-Contributions are welcome! Feel free to submit issues and pull requests.
-
-## Author
-
-Created by [wluvstephiie](https://github.com/wluvstephiie)
+## Quien chuchas pasó 10 noches haciendo esta madre??
+yo : [wluvstephiie](https://github.com/wluvstephiie)
