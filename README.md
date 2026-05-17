@@ -103,7 +103,7 @@ music-player-tomato--3/
 ✅ Track selection
 ✅ Status display
 
-## Cosillas que me dijo copilot que le puedes agregar
+## Cosillas que me segun el libro le puedes poner extras 
 
 - [ ] Real audio decoding (libmpg123, libsndfile)
 - [ ] Metadata reading (artist, title, album art)
@@ -114,9 +114,7 @@ music-player-tomato--3/
 - [ ] Keyboard shortcut customization
 - [ ] Theme support
 
-## Lic
-
-Hagan lo que gusten, si le quieres poner algo nuevo es valido!
+----
 
 ## Contributing
 No se que tanto error tenga pero ya corre
