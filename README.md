@@ -20,14 +20,39 @@ Un reproductor de musica que funciona en la terminal pero quise hacer en C++ por
 - **ncurses** library
 - **GCC** or **Clang** compiler
 
-### Instala esto
+## yo ocupé esto pero no es afuerza, busca otros metodos después :)
+
+- GCC 15.2.0 — C++ compiler (via MSYS2 MinGW x64)
+- CMake 4.3 — Build system
+- ncursesw 6.6 — Terminal UI library
+- MinGW-w64 — Windows build environment
+
+# En Windows
+1. Install MSYS2
+2. Open MSYS2 MinGW x64 and run:
+```bash
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-ncurses
+```
+3. Luego para crear el proyecto:
+```bash
+mkdir build && cd build
+cmake .. -G "MinGW Makefiles"
+mingw32-make
+```
+4. Run!
+```bash
+./music-player /path/to/your/music/folder
+```
+
+
+### Instala esto dependiendo de lo que ocupes
 
 **Ubuntu/Debian:**
 ```bash
 sudo apt-get install libncurses-dev build-essential cmake
 ```
 
-**macOS:**
+**macOS (este es de gays la neta no le muevo):**
 ```bash
 brew install ncurses cmake
 ```
@@ -37,7 +62,7 @@ brew install ncurses cmake
 sudo dnf install ncurses-devel cmake gcc-c++
 ```
 
-## Building
+## Clonarlo
 
 ```bash
 # Clone the repository
@@ -51,16 +76,6 @@ cd build
 # Build with CMake
 cmake ..
 make
-```
-
-## Forma de usarlo
-
-```bash
-# Run with default music directory (./music)
-./music-player
-
-# Run with custom music directory
-./music-player /path/to/your/music
 ```
 
 ### Controles :)
@@ -117,7 +132,7 @@ music-player-tomato--3/
 ----
 
 ## Contributing
-No se que tanto error tenga pero ya corre
+No se que tanto error tenga pero ya corre el problema es que para que reproduzca algo todavía no jala
 
 ## Quien chuchas pasó 10 noches haciendo esta madre??
 yo : [wluvstephiie](https://github.com/wluvstephiie)
