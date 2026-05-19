@@ -1,4 +1,4 @@
-# Avances y correcciones 
+# Correcciones 
 
 - Pantalla parpadeante (correccion en UI.cpp)
 
