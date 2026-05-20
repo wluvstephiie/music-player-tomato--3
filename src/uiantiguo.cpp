@@ -1,5 +1,6 @@
-//Este es el ui bueno que ya carga aparte es rojito :)
-#include "ui.h"
+//Todas estas lineas de codigo son de un archivo que ya no uso porque se crashea constantemente, si quieres usarlo de ejercico esta el error comentado en notas//
+
+/*#include "ui.h"
 #include <cmath>
 #include <iomanip>
 #include <sstream>
@@ -19,32 +20,16 @@ void UI::init() {
     cbreak();
     keypad(stdscr, TRUE);
     nodelay(stdscr, TRUE);
-    curs_set(0);
-
-    // Activar colores
-    start_color();
-    use_default_colors();
-
-    // Definir pares de colores goticos
-    init_pair(1, COLOR_RED, COLOR_BLACK);      // bordes y titulos
-    init_pair(2, COLOR_WHITE, COLOR_BLACK);    // canciones normales
-    init_pair(3, COLOR_RED, COLOR_BLACK);      // cancion seleccionada
-    init_pair(4, COLOR_MAGENTA, COLOR_BLACK);  // status
-    init_pair(5, COLOR_RED, COLOR_BLACK);      // barra de progreso
-
-    // Fondo negro total
-    wbkgd(stdscr, COLOR_PAIR(2));
+    curs_set(0);  // Hide cursor
 
     getmaxyx(stdscr, maxY, maxX);
 
+    // Create windows
     playlistWindow = newwin(maxY - 5, maxX, 0, 0);
     playerWindow = newwin(3, maxX, maxY - 5, 0);
     statusWindow = newwin(2, maxX, maxY - 2, 0);
 
-    wbkgd(playlistWindow, COLOR_PAIR(2));
-    wbkgd(playerWindow, COLOR_PAIR(2));
-    wbkgd(statusWindow, COLOR_PAIR(2));
-
+    // Enable scrolling
     scrollok(playlistWindow, TRUE);
 }
 
@@ -56,35 +41,33 @@ void UI::cleanup() {
 }
 
 void UI::displayMenu(const Playlist& playlist, const Player& player) {
+    clear(); // Este es el error porque se reinicia contstantemente
+    refresh(); // el refresh solo lo vuelve a recargar cada vez que se sube
+
     displayPlaylist(playlist, playlist.getCurrentIndex());
     displayNowPlaying(player.getCurrentFile(), player);
     displayStatus(player, playlist);
 }
 
 int UI::handleInput() {
-    return getch();
+    int ch = getch();
+    return ch;
 }
 
 void UI::displayPlaylist(const Playlist& playlist, int selectedIndex) {
     werase(playlistWindow);
-
-    // Borde rojo
-    wattron(playlistWindow, COLOR_PAIR(1));
     box(playlistWindow, 0, 0);
-    mvwaddstr(playlistWindow, 0, 2, "--- Playlist ---");
-    wattroff(playlistWindow, COLOR_PAIR(1));
+    mvwaddstr(playlistWindow, 0, 2, " Playlist ");
 
     std::vector<std::string> tracks = playlist.getAllTracks();
     for (int i = 0; i < static_cast<int>(tracks.size()) && i < maxY - 7; i++) {
         std::string filename = getFileName(tracks[i]);
         if (i == selectedIndex) {
-            wattron(playlistWindow, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
-            mvwprintw(playlistWindow, i + 1, 2, ">  %s", filename.c_str());
-            wattroff(playlistWindow, COLOR_PAIR(3) | A_BOLD | A_REVERSE);
+            wattron(playlistWindow, A_REVERSE);
+            mvwaddstr(playlistWindow, i + 1, 2, filename.c_str());
+            wattroff(playlistWindow, A_REVERSE);
         } else {
-            wattron(playlistWindow, COLOR_PAIR(2));
-            mvwprintw(playlistWindow, i + 1, 2, "  %s", filename.c_str());
-            wattroff(playlistWindow, COLOR_PAIR(2));
+            mvwaddstr(playlistWindow, i + 1, 2, filename.c_str());
         }
     }
     wrefresh(playlistWindow);
@@ -92,17 +75,12 @@ void UI::displayPlaylist(const Playlist& playlist, int selectedIndex) {
 
 void UI::displayNowPlaying(const std::string& filename, const Player& player) {
     werase(playerWindow);
-
-    wattron(playerWindow, COLOR_PAIR(1));
     box(playerWindow, 0, 0);
-    mvwaddstr(playerWindow, 0, 2, "--- Now Playing ---");
-    wattroff(playerWindow, COLOR_PAIR(1));
+    mvwaddstr(playerWindow, 0, 2, " Now Playing ");
 
     if (!filename.empty()) {
-        wattron(playerWindow, COLOR_PAIR(2) | A_BOLD);
         std::string name = getFileName(filename);
         mvwaddstr(playerWindow, 1, 2, name.c_str());
-        wattroff(playerWindow, COLOR_PAIR(2) | A_BOLD);
         displayProgressBar(player.getCurrentTime(), player.getDuration());
     }
     wrefresh(playerWindow);
@@ -113,36 +91,32 @@ void UI::displayProgressBar(double current, double duration) {
     double progress = duration > 0 ? current / duration : 0.0;
     int filledWidth = static_cast<int>(progress * barWidth);
 
-    wattron(playerWindow, COLOR_PAIR(5));
-    mvwaddstr(playerWindow, 2, 2, "[");
+    std::string bar = "[";
     for (int i = 0; i < barWidth; i++) {
-        if (i < filledWidth) {
-            waddstr(playerWindow, "=");
-        } else {
-            waddstr(playerWindow, "-");
-        }
+        bar += (i < filledWidth) ? "=" : "-";
     }
-    waddstr(playerWindow, "]");
-    wattroff(playerWindow, COLOR_PAIR(5));
+    bar += "]";
+
+    mvwaddstr(playerWindow, 2, 2, bar.c_str());
+    mvwprintw(playerWindow, 2, barWidth + 4, "%s / %s",
+              formatTime(current).c_str(),
+              formatTime(duration).c_str());
 }
 
 void UI::displayStatus(const Player& player, const Playlist& playlist) {
     werase(statusWindow);
-
-    wattron(statusWindow, COLOR_PAIR(1));
     box(statusWindow, 0, 0);
-    wattroff(statusWindow, COLOR_PAIR(1));
 
-    std::string status;
+    std::string status = "Status: ";
     switch (player.getState()) {
         case Player::PlayState::PLAYING:
-            status = ">> Playing";
+            status += "Playing";
             break;
         case Player::PlayState::PAUSED:
-            status = "|| Paused";
+            status += "Paused";
             break;
         case Player::PlayState::STOPPED:
-            status = "[] Stopped";
+            status += "Stopped";
             break;
     }
 
@@ -150,29 +124,23 @@ void UI::displayStatus(const Player& player, const Playlist& playlist) {
     if (playlist.isShuffleEnabled()) status += " | Shuffle: ON";
     if (playlist.isLoopEnabled()) status += " | Loop: ON";
 
-    wattron(statusWindow, COLOR_PAIR(4) | A_BOLD);
     mvwaddstr(statusWindow, 1, 2, status.c_str());
-    wattroff(statusWindow, COLOR_PAIR(4) | A_BOLD);
-
-    wattron(statusWindow, COLOR_PAIR(1));
-    mvwaddstr(statusWindow, 1, maxX - 50, "[SPACE] Play  [N] Next  [P] Prev  [Q] Quit");
-    wattroff(statusWindow, COLOR_PAIR(1));
+    mvwaddstr(statusWindow, 1, maxX - 40, "Commands: [SPACE]Play/Pause [N]ext [P]rev [Q]uit");
 
     wrefresh(statusWindow);
 }
 
 void UI::displayMessage(const std::string& message) {
-    wattron(statusWindow, COLOR_PAIR(4));
     mvwaddstr(statusWindow, 0, 2, message.c_str());
-    wattroff(statusWindow, COLOR_PAIR(4));
     wrefresh(statusWindow);
 }
 
 std::string UI::formatTime(double seconds) {
     int mins = static_cast<int>(seconds) / 60;
     int secs = static_cast<int>(seconds) % 60;
+
     std::ostringstream oss;
-    oss << std::setfill('0') << std::setw(2) << mins << ":"
+    oss << std::setfill('0') << std::setw(2) << mins << ":" 
         << std::setfill('0') << std::setw(2) << secs;
     return oss.str();
 }
@@ -180,3 +148,4 @@ std::string UI::formatTime(double seconds) {
 std::string UI::getFileName(const std::string& fullPath) {
     return fs::path(fullPath).filename().string();
 }
+*/ 
