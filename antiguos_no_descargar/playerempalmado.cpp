@@ -1,55 +1,34 @@
 #include "player.h"
 #include <iostream>
-#include <windows.h>
+#include <cstdlib>
 
 Player::Player()
     : state(PlayState::STOPPED),
       volume(0.7f),
       currentTime(0.0),
-      duration(0.0),
-      ffplayProcess(nullptr) {}
+      duration(0.0) {}
 
 Player::~Player() {
-    killFfplay();
-}
-
-void Player::killFfplay() {
-    if (ffplayProcess != nullptr) {
-        TerminateProcess(ffplayProcess, 0);
-        CloseHandle(ffplayProcess);
-        ffplayProcess = nullptr;
+    if (state != PlayState::STOPPED) {
+        stop();
     }
 }
 
 void Player::play(const std::string& filepath) {
-    killFfplay();
     currentFile = filepath;
     state = PlayState::PLAYING;
     currentTime = 0.0;
     duration = 0.0;
 
-    std::string command = "ffplay -nodisp -autoexit \"" + filepath + "\"";
+    std::cout << "Playing: " << filepath << std::endl;
 
-    STARTUPINFOA si = {};
-    si.cb = sizeof(si);
-    si.dwFlags = STARTF_USESTDHANDLES;
-    si.hStdInput = GetStdHandle(STD_INPUT_HANDLE);
-    si.hStdOutput = INVALID_HANDLE_VALUE;
-    si.hStdError = INVALID_HANDLE_VALUE;
+    // Reproduce audio with ffplay
+    std::string command =
+        "ffplay -nodisp -autoexit \"" +
+        filepath +
+        "\" >/dev/null 2>&1 &";
 
-    PROCESS_INFORMATION pi = {};
-
-    CreateProcessA(
-        nullptr,
-        const_cast<char*>(command.c_str()),
-        nullptr, nullptr, FALSE,
-        CREATE_NO_WINDOW,
-        nullptr, nullptr,
-        &si, &pi
-    );
-
-    ffplayProcess = pi.hProcess;
-    CloseHandle(pi.hThread);
+    system(command.c_str());
 }
 
 void Player::pause() {
@@ -65,7 +44,6 @@ void Player::resume() {
 }
 
 void Player::stop() {
-    killFfplay();
     state = PlayState::STOPPED;
     currentTime = 0.0;
     duration = 0.0;
