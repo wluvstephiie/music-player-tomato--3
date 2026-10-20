@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required packages
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(NCURSES REQUIRED ncurses)
+pkg_check_modules(NCURSES  REQUIRED ncursesw)
 
 # Add include directories
 include_directories(${NCURSES_INCLUDE_DIRS})
